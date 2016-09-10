@@ -1,0 +1,6 @@
+.DS_Store
+/__build__
+/__server_build__
+/node_modules
+npm-debug.log
+/dist/
