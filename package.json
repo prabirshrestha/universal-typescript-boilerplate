@@ -13,8 +13,8 @@
     "start": "npm-run-all --parallel server watch",
     "predebug": "npm run build",
     "debug": "node --debug-brk dist/server/index.js",
-    "deploy": "surge --project ./dist/client --domain examplesite.surge.sh",
-    "undeploy": "surge teardown --domain examplesite.surge.sh"
+    "deploy": "surge --project ./dist/client --domain https://examplesite.surge.sh",
+    "undeploy": "surge teardown --domain https://examplesite.surge.sh"
   },
   "license": "MIT",
   "dependencies": {
