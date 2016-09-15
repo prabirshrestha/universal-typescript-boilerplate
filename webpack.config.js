@@ -32,7 +32,8 @@ var clientConfig = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: root('src/index.html'), to: root('dist/client/index.html') }
+            { from: root('src/index.html'), to: root('dist/client/index.html') },
+            // { from: root('src/index.html'), to: root('dist/client/200.html') } // surge treats 200.html as special file
         ])
     ]
 };
@@ -53,7 +54,6 @@ var serverConfig = {
         Buffer: true
     }
 };
-
 
 // Default config
 var defaultConfig = {

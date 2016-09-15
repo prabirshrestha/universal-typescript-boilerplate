@@ -12,7 +12,9 @@
     "server": "nodemon dist/server/index.js",
     "start": "npm-run-all --parallel server watch",
     "predebug": "npm run build",
-    "debug": "node --debug-brk dist/server/index.js"
+    "debug": "node --debug-brk dist/server/index.js",
+    "deploy": "surge --project ./dist/client --domain examplesite.surge.sh",
+    "undeploy": "surge teardown --domain examplesite.surge.sh"
   },
   "license": "MIT",
   "dependencies": {
@@ -29,6 +31,7 @@
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.4",
     "source-map-loader": "^0.1.5",
+    "surge": "^0.18.0",
     "ts-loader": "^0.8.2",
     "typescript": "^2.0.2",
     "webpack": "^1.13.2",
