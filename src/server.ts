@@ -5,6 +5,7 @@ import * as path from 'path';
 
 const app = express();
 const ROOT = path.join(path.resolve(__dirname, '..'));
+const PORT = process.env.PORT || 3000;
 
 // Serve static files
 app.use('/assets', express.static(path.join(__dirname, 'assets'), { maxAge: 30 }));
@@ -15,12 +16,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', function(req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  var pojo = { status: 404, message: 'No Content' };
-  var json = JSON.stringify(pojo, null, 2);
-  res.status(404).send(json);
+    res.setHeader('Content-Type', 'application/json');
+    const pojo = { status: 404, message: 'No Content' };
+    const json = JSON.stringify(pojo, null, 2);
+    res.status(404).send(json);
 });
 
-app.listen(3000, () => {
-  console.log('Listening on: http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`Listening on: http://localhost:${PORT}`);
 });
