@@ -1,7 +1,7 @@
 require('isomorphic-fetch');
 
-import * as express from 'express';
-import * as path from 'path';
+import express from 'express';
+import path from 'path';
 
 const app = express();
 const ROOT = path.join(path.resolve(__dirname, '..'));

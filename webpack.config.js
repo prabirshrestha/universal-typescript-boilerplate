@@ -4,11 +4,11 @@ var path = require('path');
 
 var commonConfig = {
     resolve: {
-        extensions: ['', '.ts', '.tsx', '.js', '.json']
+        extensions: ['', '.js', '.json']
     },
     module: {
         loaders: [
-            { test: /\.tsx?$/, loaders: ['ts-loader'] },
+            { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ },
             { test: /\.css$/, loader: 'raw-loader' },
             { test: /\.json$/, loader: 'raw-loader' }
         ]
