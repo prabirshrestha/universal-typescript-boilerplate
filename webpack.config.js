@@ -1,6 +1,10 @@
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpackMerge = require('webpack-merge');
+var ManifestPlugin = require('webpack-manifest-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var postcssAssets = require('postcss-assets');
+var postcssNext = require('postcss-cssnext');
 var path = require('path');
 
 var commonConfig = {
@@ -19,7 +23,6 @@ var commonConfig = {
     ],
     loaders: [
       { test: /\.tsx?$/, loaders: ['ts-loader'] },
-      { test: /\.css$/, loader: 'raw-loader' },
       { test: /\.json$/, loader: 'raw-loader' }
     ]
   },
@@ -46,7 +49,38 @@ var clientConfig = {
     process: true,
     Buffer: false
   },
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        include: path.resolve('./src'),
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
+          'postcss-loader'
+        )
+      },
+      {
+        test: /\.css$/,
+        exclude: path.resolve('./src'),
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          'css-loader'
+        )
+      }
+    ]
+  },
+  postcss: function () {
+    return [
+      postcssNext(),
+      postcssAssets({ relative: true })
+    ];
+  },
   plugins: [
+    new ExtractTextPlugin('css/[name].css'),
+    new ManifestPlugin({
+      fileName: '../manifest.json'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
@@ -56,7 +90,8 @@ var clientConfig = {
     new CopyWebpackPlugin([
       { from: root('src/index.html'), to: root('build/public/index.html') },
       // { from: root('src/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
-    ])
+    ]),
+    new webpack.NoErrorsPlugin()
   ]
 };
 
@@ -74,6 +109,17 @@ var serverConfig = {
     __filename: true,
     process: true,
     Buffer: true
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loaders: [
+          'isomorphic-style-loader',
+          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
+        ]
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
