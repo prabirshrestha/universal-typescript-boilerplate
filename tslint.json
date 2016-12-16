@@ -15,6 +15,7 @@
     ],
     "no-var-requires": false,
     "ordered-imports": false,
+    "member-access": false,
     "member-ordering": [
       false
     ],
