@@ -3,6 +3,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpackMerge = require('webpack-merge');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var StyleLintPlugin = require('stylelint-webpack-plugin');
 var postcssAssets = require('postcss-assets');
 var postcssNext = require('postcss-cssnext');
 var path = require('path');
@@ -77,6 +78,7 @@ var clientConfig = {
     ];
   },
   plugins: [
+    new StyleLintPlugin({ files: './src/*.css' }),
     new ExtractTextPlugin('css/[name].css'),
     new ManifestPlugin({
       fileName: '../manifest.json'
