@@ -34,6 +34,12 @@ var clientConfig = {
     Buffer: false
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        BROWSER: JSON.stringify(true),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
     new CopyWebpackPlugin([
       { from: root('src/index.html'), to: root('dist/client/index.html') },
       // { from: root('src/index.html'), to: root('dist/client/200.html') } // surge treats 200.html as special file
@@ -55,7 +61,15 @@ var serverConfig = {
     __filename: true,
     process: true,
     Buffer: true
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        BROWSER: JSON.stringify(false),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    })
+  ]
 };
 
 // Default config

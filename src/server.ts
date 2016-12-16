@@ -27,5 +27,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log(`running in browser: ${process.env.BROWSER}`);
   console.log(`Listening on: http://localhost:${PORT}`);
 });
