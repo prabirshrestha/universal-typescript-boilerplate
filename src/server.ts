@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.sendFile('/index.html', { root: __dirname });
 });
 
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   const pojo = { status: 404, message: 'No Content' };
   const json = JSON.stringify(pojo, null, 2);
