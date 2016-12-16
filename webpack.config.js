@@ -1,8 +1,15 @@
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var webpackMerge = require('webpack-merge');
 var path = require('path');
 
 var commonConfig = {
+  output: {
+    path: path.resolve('./build/public'),
+    publicPath: '/public/',
+    filename: 'js/[name].js',
+    pathinfo: true
+  },
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.json']
   },
@@ -20,11 +27,17 @@ var commonConfig = {
   ]
 };
 
+if (process.env.NODE_ENV !== 'production') {
+  commonConfig = webpackMerge({}, commonConfig, {
+    devtool: 'source-map',
+    debug: true
+  });
+}
+
 var clientConfig = {
   target: 'web',
-  entry: './src/client',
-  output: {
-    path: root('dist/client')
+  entry: {
+    app: './src/client'
   },
   node: {
     global: true,
@@ -41,8 +54,8 @@ var clientConfig = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: root('src/index.html'), to: root('dist/client/index.html') },
-      // { from: root('src/index.html'), to: root('dist/client/200.html') } // surge treats 200.html as special file
+      { from: root('src/index.html'), to: root('build/public/index.html') },
+      // { from: root('src/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
     ])
   ]
 };
@@ -51,8 +64,8 @@ var serverConfig = {
   target: 'node',
   entry: './src/server', // use the entry file of the node server if everything is ts rather than es5
   output: {
-    path: root('dist/server'),
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
+    filename: '../server.js',
   },
   externals: checkNodeImport,
   node: {
@@ -77,14 +90,9 @@ var defaultConfig = {
   context: __dirname,
   resolve: {
     root: root('/src')
-  },
-  output: {
-    publicPath: path.resolve(__dirname),
-    filename: 'index.js'
   }
 }
 
-var webpackMerge = require('webpack-merge');
 module.exports = [
   // Client
   webpackMerge({}, defaultConfig, commonConfig, clientConfig),
