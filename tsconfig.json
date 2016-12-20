@@ -17,10 +17,5 @@
     "dom",
     "es5",
     "es2015.promise"
-  ],
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  ]
 }

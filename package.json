@@ -14,7 +14,8 @@
     "predebug": "npm run build",
     "debug": "node --debug-brk build/server.js",
     "deploy": "surge --project ./build/public --domain https://examplesite.surge.sh",
-    "undeploy": "surge teardown --domain https://examplesite.surge.sh"
+    "undeploy": "surge teardown --domain https://examplesite.surge.sh",
+    "install:react": "npm i --save react react-dom react-router@next mobx mobx-react mobx-react-devtools && npm i --save-dev @types/react @types/react-dom https://github.com/danfma/typed-react-router"
   },
   "license": "MIT",
   "dependencies": {

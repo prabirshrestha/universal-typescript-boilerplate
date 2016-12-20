@@ -15,9 +15,14 @@
 ## Watch files
 * `npm run watch` to build your client app and start a web server
 
-## Branches
-* Master branch contains no js library/framework.
-* Refer to other branches to see the usage with other libraries/framework.
+## React
+React is not installed by default. If you would like to use react, react-dom, react-router v4 and mobx use run the following command.
+
+```sh
+npm run install:react
+```
+
+NOTE: TSX and decorators are already enabled by default even without running `npm run install:react`.
 
 ## Credits
 
