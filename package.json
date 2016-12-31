@@ -35,7 +35,7 @@
     "isomorphic-style-loader": "^1.1.0",
     "json-loader": "^0.5.4",
     "nodemon": "^1.11.0",
-    "npm-run-all": "^3.1.2",
+    "npm-run-all": "^4.0.0",
     "postcss-assets": "^4.1.0",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.1",
