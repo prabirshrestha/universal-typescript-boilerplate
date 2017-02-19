@@ -53,6 +53,6 @@
     "webpack": "^1.14.0",
     "webpack-dev-server": "^2.2.1",
     "webpack-manifest-plugin": "^1.1.0",
-    "webpack-merge": "^2.0.0"
+    "webpack-merge": "^3.0.0"
   }
 }
