@@ -50,7 +50,7 @@
     "tslint-loader": "^3.3.0",
     "tslint-react": "^2.3.0",
     "typescript": "^2.1.5",
-    "webpack": "^1.14.0",
+    "webpack": "^2.3.0",
     "webpack-dev-server": "^2.2.1",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^2.0.0"
