@@ -37,7 +37,7 @@
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.1",
     "postcss-assets": "^4.1.0",
-    "postcss-cssnext": "^2.9.0",
+    "postcss-cssnext": "^3.0.0",
     "postcss-loader": "^1.2.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.4",
