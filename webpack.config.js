@@ -1,14 +1,16 @@
-var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var webpackMerge = require('webpack-merge');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StyleLintPlugin = require('stylelint-webpack-plugin');
-var postcssAssets = require('postcss-assets');
-var postcssNext = require('postcss-cssnext');
-var path = require('path');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const postcssAssets = require('postcss-assets');
+const postcssNext = require('postcss-cssnext');
+const path = require('path');
+const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
-var commonConfig = {
+let commonConfig = {
+  context: __dirname,
   output: {
     path: path.resolve('./build/public'),
     publicPath: '/public/',
@@ -16,17 +18,20 @@ var commonConfig = {
     pathinfo: true
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  },
-  module: {
-    loaders: [
-      { test: /\.tsx?$/, loaders: ['awesome-typescript-loader'] },
-      { test: /\.json$/, loader: 'raw-loader' }
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+    plugins: [
+      new TsConfigPathsPlugin({ tsconfig: require('./tsconfig.json') })
     ]
   },
   plugins: [
+    new CheckerPlugin()
   ]
 };
+
+const commonLoaders = [
+  { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+  { test: /\.json$/, loader: 'raw-loader' }
+];
 
 if (process.env.NODE_ENV !== 'production') {
   commonConfig = webpackMerge({}, commonConfig, {
@@ -34,7 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-var clientConfig = {
+const clientConfig = {
   target: 'web',
   entry: {
     app: './src/client'
@@ -47,6 +52,7 @@ var clientConfig = {
     Buffer: false
   },
   module: {
+    loaders: commonLoaders,
     rules: [
       {
         test: /\.css$/,
@@ -54,7 +60,7 @@ var clientConfig = {
           fallback: 'style-loader',
           use: [
             { loader: 'css-loader', options: { importLoaders: 1 } },
-            { 
+            {
               loader: 'postcss-loader',
               options: {
                 'plugins': () => [require('autoprefixer')]
@@ -84,7 +90,7 @@ var clientConfig = {
   ]
 };
 
-var serverConfig = {
+const serverConfig = {
   target: 'node',
   entry: './src/server', // use the entry file of the node server if everything is ts rather than es5
   output: {
@@ -108,7 +114,7 @@ var serverConfig = {
           'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
         ]
       }
-    ]
+    ].concat(commonLoaders)
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -120,20 +126,12 @@ var serverConfig = {
   ]
 };
 
-// Default config
-var defaultConfig = {
-  context: __dirname,
-  resolve: {
-    modules: [ root('/src'), 'node_modules']
-  }
-}
-
 module.exports = [
   // Client
-  webpackMerge({}, defaultConfig, commonConfig, clientConfig),
+  webpackMerge({}, commonConfig, clientConfig),
 
   // Server
-  webpackMerge({}, defaultConfig, commonConfig, serverConfig)
+  webpackMerge({}, commonConfig, serverConfig)
 ]
 
 // Helpers

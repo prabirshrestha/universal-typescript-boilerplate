@@ -1,6 +1,0 @@
-{
-  "watch": [
-    "dist/server.js"
-  ],
-  "ext" : "js ts tsx json html"
-}
