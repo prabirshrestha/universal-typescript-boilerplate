@@ -23,15 +23,16 @@ let commonConfig = {
       new TsConfigPathsPlugin({ tsconfig: require('./tsconfig.json') })
     ]
   },
+  module: {
+    rules: [
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+      { test: /\.json$/, loader: 'raw-loader' }
+    ]
+  },
   plugins: [
     new CheckerPlugin()
   ]
 };
-
-const commonLoaders = [
-  { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-  { test: /\.json$/, loader: 'raw-loader' }
-];
 
 if (process.env.NODE_ENV !== 'production') {
   commonConfig = webpackMerge({}, commonConfig, {
@@ -52,7 +53,6 @@ const clientConfig = {
     Buffer: false
   },
   module: {
-    loaders: commonLoaders,
     rules: [
       {
         test: /\.css$/,
@@ -106,7 +106,7 @@ const serverConfig = {
     Buffer: true
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
         loaders: [
@@ -114,7 +114,7 @@ const serverConfig = {
           'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
         ]
       }
-    ].concat(commonLoaders)
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
