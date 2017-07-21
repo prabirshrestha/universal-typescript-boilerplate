@@ -27,6 +27,10 @@ npm run build:dev
 
 Creates the development build under `build` folder. To start server run `npm run server`.
 
+## CI buids
+
+Travis is configured to run `npm run ci`.
+
 ## React
 React is not installed by default. If you would like to use react, react-dom, react-router v4 and mobx use run the following command.
 

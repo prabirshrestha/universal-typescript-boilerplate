@@ -14,7 +14,8 @@
     "prestart": "npm run clean",
     "start": "npm-run-all --parallel watch server",
     "deploy": "surge --project ./build/public --domain https://examplesite.surge.sh",
-    "undeploy": "surge teardown --domain https://examplesite.surge.sh"
+    "undeploy": "surge teardown --domain https://examplesite.surge.sh",
+    "ci": "npm run build:dev && npm run build:prod"
   },
   "license": "MIT",
   "dependencies": {
