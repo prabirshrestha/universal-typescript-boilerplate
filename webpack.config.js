@@ -16,14 +16,11 @@ var commonConfig = {
     pathinfo: true
   },
   resolve: {
-    extensions: ['', '.ts', '.tsx', '.js', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   module: {
-    preLoaders: [
-      { test: /\.tsx?$/, loader: 'tslint' }
-    ],
     loaders: [
-      { test: /\.tsx?$/, loaders: ['ts-loader'] },
+      { test: /\.tsx?$/, loaders: ['awesome-typescript-loader'] },
       { test: /\.json$/, loader: 'raw-loader' }
     ]
   },
@@ -33,8 +30,7 @@ var commonConfig = {
 
 if (process.env.NODE_ENV !== 'production') {
   commonConfig = webpackMerge({}, commonConfig, {
-    devtool: 'source-map',
-    debug: true
+    devtool: 'source-map'
   });
 }
 
@@ -51,31 +47,23 @@ var clientConfig = {
     Buffer: false
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        include: path.resolve('./src'),
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
-          'postcss-loader'
-        )
-      },
-      {
-        test: /\.css$/,
-        exclude: path.resolve('./src'),
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader'
-        )
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', options: { importLoaders: 1 } },
+            { 
+              loader: 'postcss-loader',
+              options: {
+                'plugins': () => [require('autoprefixer')]
+              }
+            }
+          ]
+        })
       }
     ]
-  },
-  postcss: function () {
-    return [
-      postcssNext(),
-      postcssAssets({ relative: true })
-    ];
   },
   plugins: [
     new StyleLintPlugin({ files: './src/*.css' }),
@@ -93,7 +81,6 @@ var clientConfig = {
       { from: root('src/index.html'), to: root('build/public/index.html') },
       // { from: root('src/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
     ]),
-    new webpack.NoErrorsPlugin()
   ]
 };
 
@@ -137,7 +124,7 @@ var serverConfig = {
 var defaultConfig = {
   context: __dirname,
   resolve: {
-    root: root('/src')
+    modules: [ root('/src'), 'node_modules']
   }
 }
 
