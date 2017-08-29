@@ -2,7 +2,7 @@ import 'tslib';
 
 import * as es6Promise from 'es6-promise';
 es6Promise.polyfill();
-import 'isomorphic-fetch';
+import 'isomorphic-unfetch';
 
 import * as express from 'express';
 import * as path from 'path';
