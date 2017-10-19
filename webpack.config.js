@@ -14,7 +14,7 @@ let commonConfig = {
   output: {
     path: path.resolve('./build/public'),
     publicPath: '/public/',
-    filename: 'js/[name].js',
+    filename: '[name].js',
     pathinfo: true
   },
   resolve: {
@@ -73,7 +73,7 @@ const clientConfig = {
   },
   plugins: [
     new StyleLintPlugin({ files: './src/*.css' }),
-    new ExtractTextPlugin('css/[name].css'),
+    new ExtractTextPlugin('[name].css'),
     new ManifestPlugin({
       fileName: '../manifest.json'
     }),
@@ -94,14 +94,15 @@ const serverConfig = {
   target: 'node',
   entry: './src/server', // use the entry file of the node server if everything is ts rather than es5
   output: {
+    path: root('./build/server'),
     libraryTarget: 'commonjs2',
-    filename: '../server.js',
+    filename: 'index.js',
   },
   externals: checkNodeImport,
   node: {
     global: true,
-    __dirname: true,
-    __filename: true,
+    __dirname: false,
+    __filename: false,
     process: true,
     Buffer: true
   },
