@@ -24,7 +24,7 @@
     "koa": "2.3.0",
     "koa-compress": "2.0.0",
     "koa-router": "7.2.1",
-    "koa-static": "4.0.1",
+    "koa-static": "4.0.2",
     "tslib": "1.7.1"
   },
   "devDependencies": {
