@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const postcssAssets = require('postcss-assets');
 const postcssNext = require('postcss-cssnext');
@@ -54,26 +53,26 @@ const clientConfig = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader', options: { importLoaders: 1 } },
-            {
-              loader: 'postcss-loader',
-              options: {
-                'plugins': () => [require('autoprefixer')]
-              }
-            }
-          ]
-        })
-      }
+      // {
+      //   test: /\.css$/,
+      //   use: ExtractTextPlugin.extract({
+      //     fallback: 'style-loader',
+      //     use: [
+      //       { loader: 'css-loader', options: { importLoaders: 1 } },
+      //       {
+      //         loader: 'postcss-loader',
+      //         options: {
+      //           'plugins': () => [require('autoprefixer')]
+      //         }
+      //       }
+      //     ]
+      //   })
+      // }
     ]
   },
   plugins: [
-    new StyleLintPlugin({ files: './src/*.css' }),
-    new ExtractTextPlugin('[name].css'),
+    new StyleLintPlugin({ files: './src/**/*.css' }),
+    // new ExtractTextPlugin('[name].css'),
     new ManifestPlugin({
       fileName: '../manifest.json'
     }),
@@ -108,13 +107,13 @@ const serverConfig = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        loaders: [
-          'isomorphic-style-loader',
-          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
-        ]
-      }
+      // {
+      //   test: /\.css$/,
+      //   loaders: [
+      //     'isomorphic-style-loader',
+      //     'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
+      //   ]
+      // }
     ]
   },
   plugins: [
