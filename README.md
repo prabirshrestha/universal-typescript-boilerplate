@@ -30,12 +30,3 @@ Creates the development build under `build` folder. To start server run `yarn se
 ## CI buids
 
 Travis is configured to run `npm run ci`.
-
-## React
-React is not installed by default. If you would like to use react, react-dom, react-router v4 and mobx use run the following command.
-
-```sh
-yarn install:react
-```
-
-NOTE: TSX and decorators are already enabled by default even without running `yarn install:react`.
