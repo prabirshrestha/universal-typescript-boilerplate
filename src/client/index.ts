@@ -1,10 +1,25 @@
-import 'tslib';
+import 'core-js/proposals/global-this';
 
-import * as es6Promise from 'es6-promise';
-es6Promise.polyfill();
-import 'isomorphic-unfetch';
+if (!globalThis.Promise || !globalThis.fetch) {
+  Promise.all([
+      import('es6-promise'),
+      import('isomorphic-unfetch')
+    ])
+    .then(([es6Promise]) => {
+      es6Promise.polyfill();
+      startApp();
+    });
+} else {
+  startApp();
+}
 
-// import '../common/styles.css';
+function startApp() {
+  console.log('*** update client/index.ts to use your favorite js library/framework ***');
+  console.log(`running in browser: ${process.env.BROWSER}`);
 
-console.log('*** update client/index.ts to use your favorite js library/framework ***');
-console.log(`running in browser: ${process.env.BROWSER}`);
+  import('./hello')
+    .then(({ Hello }) => {
+      const hello = new Hello('Hello world!');
+      hello.greet();
+    });
+}

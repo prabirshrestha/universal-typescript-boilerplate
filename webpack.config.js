@@ -4,30 +4,35 @@ const webpackMerge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const path = require('path');
-const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 let commonConfig = {
   context: __dirname,
   output: {
-    path: path.resolve('./build/public'),
-    publicPath: '/public/',
+    path: path.resolve('./build/public/assets'),
+    publicPath: '/assets/',
     filename: '[name].js',
     pathinfo: true
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     plugins: [
-      new TsConfigPathsPlugin({ tsconfig: require('./tsconfig.json') })
     ]
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-      { test: /\.json$/, loader: 'raw-loader' }
+      {
+        test: /\.tsx?$/,
+        use: ['babel-loader', 'ts-loader']
+      },
+      { test: /\.json$/, loader: 'raw-loader' },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+      }
     ]
   },
   plugins: [
-    new CheckerPlugin()
   ]
 };
 

@@ -4,10 +4,11 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "jsx": "react",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5"
+    "target": "esnext"
   },
   "exclude": [
     "node_modules",
