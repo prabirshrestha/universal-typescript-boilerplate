@@ -10,11 +10,11 @@ export function genReqId() {
 
 export function createServer() {
   const server = fastify({
-    logger: true,
-    ignoreTrailingSlash: true,
     caseSensitive: false,
-    trustProxy: false,
+    ignoreTrailingSlash: true,
+    logger: true,
     return503OnClosing: true,
+    trustProxy: false,
     // genReqId: genReqId()
   });
 
