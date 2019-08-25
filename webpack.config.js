@@ -3,8 +3,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const postcssAssets = require('postcss-assets');
-const postcssNext = require('postcss-cssnext');
 const path = require('path');
 const { CheckerPlugin, TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
@@ -53,26 +51,10 @@ const clientConfig = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: [
-      //       { loader: 'css-loader', options: { importLoaders: 1 } },
-      //       {
-      //         loader: 'postcss-loader',
-      //         options: {
-      //           'plugins': () => [require('autoprefixer')]
-      //         }
-      //       }
-      //     ]
-      //   })
-      // }
     ]
   },
   plugins: [
     new StyleLintPlugin({ files: './src/**/*.css' }),
-    // new ExtractTextPlugin('[name].css'),
     new ManifestPlugin({
       fileName: '../manifest.json'
     }),
@@ -107,13 +89,6 @@ const serverConfig = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   loaders: [
-      //     'isomorphic-style-loader',
-      //     'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]'
-      //   ]
-      // }
     ]
   },
   plugins: [
