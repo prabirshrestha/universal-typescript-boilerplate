@@ -70,8 +70,8 @@ const clientConfig = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: root('src/index.html'), to: root('build/public/index.html') },
-      // { from: root('src/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
+      { from: root('src/public'), to: root('build/public') },
+      // { from: root('src/public/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
     ]),
   ]
 };
