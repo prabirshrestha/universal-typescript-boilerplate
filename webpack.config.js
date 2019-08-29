@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const path = require('path');
 
@@ -73,6 +74,10 @@ const clientConfig = {
       { from: root('src/public'), to: root('build/public') },
       // { from: root('src/public/index.html'), to: root('build/public/200.html') } // surge treats 200.html as special file
     ]),
+    new WorkboxWebpackPlugin.InjectManifest({ // needs to be the last plugin since manfiest are based of hash
+      swSrc: './src/common/sw.js',
+      swDest: '../sw.js'
+    })
   ]
 };
 

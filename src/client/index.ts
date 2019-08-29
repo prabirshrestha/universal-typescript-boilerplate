@@ -14,4 +14,10 @@ function startApp() {
         React.createElement(App)),
       document.getElementById('root'));
   });
+
+  if ('serviceWorker' in navigator && 'addEventListener' in window) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js');
+    });
+  }
 }

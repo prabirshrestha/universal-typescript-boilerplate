@@ -61,6 +61,7 @@ export function createServer() {
         .send(`
 <html>
     <head>
+        <link rel="icon" href="/favicon.ico"/>
     </head>
     <body>
         <div id="root">${app}</div>
