@@ -1,25 +1,17 @@
-import 'core-js/proposals/global-this';
-
-if (!globalThis.Promise || !globalThis.fetch) {
-  Promise.all([
-      import('es6-promise'),
-      import('isomorphic-unfetch')
-    ])
-    .then(([es6Promise]) => {
-      es6Promise.polyfill();
-      startApp();
-    });
-} else {
-  startApp();
-}
+startApp();
 
 function startApp() {
-  console.log('*** update client/index.ts to use your favorite js library/framework ***');
   console.log(`running in browser: ${process.env.BROWSER}`);
 
-  import('./hello')
-    .then(({ Hello }) => {
-      const hello = new Hello('Hello world!');
-      hello.greet();
-    });
+  Promise.all([
+    import('react'),
+    import('react-dom'),
+    import('react-router-dom'),
+    import('../common/app')
+  ]).then(([ React, ReactDOM, { BrowserRouter }, { App } ]) => {
+    ReactDOM.hydrate(
+      React.createElement(BrowserRouter, {},
+        React.createElement(App)),
+      document.getElementById('root'));
+  });
 }

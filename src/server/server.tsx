@@ -61,6 +61,7 @@ export function createServer() {
     </head>
     <body>
         <div id="root">${app}</div>
+        <script src="/assets/app.js" async defer></script>
     </body>
 </html>`);
     }
