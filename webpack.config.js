@@ -6,12 +6,14 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const path = require('path');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 let commonConfig = {
   context: __dirname,
   output: {
     path: path.resolve('./build/public/assets'),
     publicPath: '/assets/',
-    filename: '[name].js',
+    filename: isProd ? '[name].[contenthash].js' : '[name].js',
     pathinfo: true
   },
   resolve: {
@@ -37,7 +39,7 @@ let commonConfig = {
   ]
 };
 
-if (process.env.NODE_ENV !== 'production') {
+if (!isProd) {
   commonConfig = webpackMerge({}, commonConfig, {
     devtool: 'source-map'
   });
