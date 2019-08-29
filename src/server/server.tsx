@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as fastify from 'fastify';
 import * as fastifyStatic from 'fastify-static';
@@ -36,6 +37,16 @@ export function createServer() {
     reply.send({});
   });
 
+  const runtimeChunkContents = fs.readFileSync(
+    path.join(__dirname, '../public/assets/runtime~app.js'),
+    'utf8'
+  );
+
+  const manfiest = JSON.parse(fs.readFileSync(
+    path.join(__dirname, '../public/manifest.json'),
+    'utf8'
+  ));
+
   server.get('*', async (req, reply) => {
     const url = req.raw.url;
     const currentRoute: IRoute = routes.find(route => matchPath(url, route)) || {};
@@ -65,7 +76,9 @@ export function createServer() {
     </head>
     <body>
         <div id="root">${app}</div>
-        <script src="/assets/app.js" async defer></script>
+        <script>${runtimeChunkContents}</script>
+        <script defer src="${manfiest['vendors.js']}"></script>
+        <script defer src="${manfiest['app.js']}"></script>
     </body>
 </html>`);
     }

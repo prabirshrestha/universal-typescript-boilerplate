@@ -1,5 +1,3 @@
-startApp();
-
 function startApp() {
   console.log(`running in browser: ${process.env.BROWSER}`);
 
@@ -10,14 +8,17 @@ function startApp() {
     import('../common/app')
   ]).then(([ React, ReactDOM, { BrowserRouter }, { App } ]) => {
     ReactDOM.hydrate(
-      React.createElement(BrowserRouter, {},
-        React.createElement(App)),
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
       document.getElementById('root'));
   });
 
-  if ('serviceWorker' in navigator && 'addEventListener' in window) {
+  if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js');
     });
   }
 }
+
+startApp();

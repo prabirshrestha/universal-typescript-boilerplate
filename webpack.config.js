@@ -61,6 +61,18 @@ const clientConfig = {
     rules: [
     ]
   },
+  optimization: {
+    runtimeChunk: true,
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  },
   plugins: [
     new StyleLintPlugin({ files: './src/**/*.css' }),
     new ManifestPlugin({
