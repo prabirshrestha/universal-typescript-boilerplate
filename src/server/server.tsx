@@ -4,6 +4,7 @@ import { StaticRouter, matchPath } from 'react-router-dom';
 import * as path from 'path';
 import * as fastify from 'fastify';
 import * as fastifyStatic from 'fastify-static';
+import * as fastifyCompress from 'fastify-compress';
 import * as hyperid from 'hyperid';
 import { routes, IRoute } from '../common/routes';
 import { App } from '../common/app';
@@ -22,6 +23,8 @@ export function createServer() {
     trustProxy: false,
     // genReqId: genReqId()
   });
+
+  server.register(fastifyCompress, {});
 
   server.register(fastifyStatic, {
     root: path.join(__dirname, '../public'),
