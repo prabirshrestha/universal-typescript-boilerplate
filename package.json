@@ -13,6 +13,7 @@
     "server": "wait-on dist/server/main.js && nodemon dist/server/main.js -w dist/server/main.js",
     "prestart": "npm run clean",
     "start": "npm-run-all --parallel watch server",
+    "start:prod": "npm-run-all --parallel build:prod server",
     "deploy": "surge --project ./dist/public --domain https://examplesite.surge.sh",
     "undeploy": "surge teardown --domain https://examplesite.surge.sh",
     "ci": "npm run build:dev && npm run build:prod"
