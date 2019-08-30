@@ -74,7 +74,7 @@ export function createServer() {
     } else {
       const jsxHtml = renderToString(jsx);
       reply
-        .code(context.status === 404 ? 404 : 200)
+        .code(context.status || 200)
         .header('content-type', 'text/html; charset=utf-8')
         .send(`
 <!doctype html>

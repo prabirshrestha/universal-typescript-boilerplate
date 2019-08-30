@@ -24,6 +24,11 @@ export const routes: IRoute[] = [
     fetchInitialData: () => Promise.resolve(null)
   },
   {
+    path: '/contact',
+    exact: true,
+    component: loadable(() => import('./contact'))
+  },
+  {
     key: 'notfound',
     component: NotFound
   }
