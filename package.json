@@ -3,17 +3,17 @@
   "version": "0.0.1",
   "description": "typescript boilerplate",
   "scripts": {
-    "clean": "rimraf build",
+    "clean": "rimraf dist",
     "prebuild:dev": "npm run clean",
     "build:dev": "webpack",
     "prebuild:prod": "npm run clean",
     "build:prod": "webpack --progress -p --mode=production",
     "build": "npm run build:prod",
     "watch": "webpack --watch --mode=development",
-    "server": "wait-on build/server/index.js && nodemon build/server/index.js -w build/server/index.js",
+    "server": "wait-on dist/server/main.js && nodemon dist/server/main.js -w dist/server/main.js",
     "prestart": "npm run clean",
     "start": "npm-run-all --parallel watch server",
-    "deploy": "surge --project ./build/public --domain https://examplesite.surge.sh",
+    "deploy": "surge --project ./dist/public --domain https://examplesite.surge.sh",
     "undeploy": "surge teardown --domain https://examplesite.surge.sh",
     "ci": "npm run build:dev && npm run build:prod"
   },
@@ -21,6 +21,8 @@
   "dependencies": {
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
+    "@loadable/component": "5.10.2",
+    "@loadable/server": "5.10.2",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
     "@types/react-router-dom": "4.3.5",
@@ -29,15 +31,18 @@
     "fastify-compress": "0.11.0",
     "fastify-static": "2.5.0",
     "hyperid": "2.0.2",
-    "isomorphic-unfetch": "3.0.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-router-dom": "5.0.1",
     "tslib": "1.10.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-transform-runtime": "7.5.5",
     "@babel/preset-env": "7.5.5",
+    "@babel/preset-react": "7.0.0",
+    "@loadable/babel-plugin": "5.10.0",
+    "@loadable/webpack-plugin": "5.7.1",
     "babel-loader": "8.0.6",
     "copy-webpack-plugin": "5.0.4",
     "file-loader": "4.2.0",
@@ -61,6 +66,7 @@
     "webpack-dev-server": "3.8.0",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-merge": "4.2.2",
+    "webpack-node-externals": "1.7.2",
     "workbox-webpack-plugin": "4.3.1"
   }
 }

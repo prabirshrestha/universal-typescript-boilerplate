@@ -1,6 +1,7 @@
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
+import { ChunkExtractor, ChunkExtractorManager  } from '@loadable/server';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as fastify from 'fastify';
@@ -8,7 +9,6 @@ import * as fastifyStatic from 'fastify-static';
 import * as fastifyCompress from 'fastify-compress';
 import * as hyperid from 'hyperid';
 import { routes, IRoute } from '../common/routes';
-import { App } from '../common/app';
 
 export function genReqId() {
   const instance = hyperid();
@@ -25,27 +25,27 @@ export function createServer() {
     // genReqId: genReqId()
   });
 
+  const nodeStats = path.resolve('./dist/node/loadable-stats.json');
+  const webStats = path.resolve('./dist/web/loadable-stats.json');
+
   server.register(fastifyCompress, {});
 
   server.register(fastifyStatic, {
-    root: path.join(__dirname, '../public'),
+    root: path.resolve('./dist/public'),
     prefix: '/',
     wildcard: false,
+    decorateReply: true
+  });
+
+  server.register(fastifyStatic, {
+    root: path.resolve('./dist/web'),
+    prefix: '/assets',
+    decorateReply: false
   });
 
   server.get('/healthcheck', (req, reply) => {
     reply.send({});
   });
-
-  const runtimeChunkContents = fs.readFileSync(
-    path.join(__dirname, '../public/assets/runtime~app.js'),
-    'utf8'
-  );
-
-  const manfiest = JSON.parse(fs.readFileSync(
-    path.join(__dirname, '../public/manifest.json'),
-    'utf8'
-  ));
 
   server.get('*', async (req, reply) => {
     const url = req.raw.url;
@@ -57,15 +57,22 @@ export function createServer() {
 
     const context: any = { data };
 
-    const app = ReactDOMServer.renderToString(
+    const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
+    const { App } = nodeExtractor.requireEntrypoint();
+
+    const webExtractor = new ChunkExtractor({ statsFile: webStats });
+    const jsx = webExtractor.collectChunks(
       <StaticRouter location={url} context={context}>
         <App />
       </StaticRouter>
     );
 
+    const html = renderToString(jsx);
+
     if (context.url) {
       reply.redirect(context.url);
     } else {
+      const jsxHtml = renderToString(jsx);
       reply
         .code(context.status === 404 ? 404 : 200)
         .header('content-type', 'text/html; charset=utf-8')
@@ -73,12 +80,12 @@ export function createServer() {
 <html>
     <head>
         <link rel="icon" href="/favicon.ico"/>
+        ${webExtractor.getLinkTags()}
+        ${webExtractor.getStyleTags()}
     </head>
     <body>
-        <div id="root">${app}</div>
-        <script>${runtimeChunkContents}</script>
-        <script defer src="${manfiest['vendors.js']}"></script>
-        <script defer src="${manfiest['app.js']}"></script>
+        <div id="root">${html}</div>
+        ${webExtractor.getScriptTags()}
     </body>
 </html>`);
     }

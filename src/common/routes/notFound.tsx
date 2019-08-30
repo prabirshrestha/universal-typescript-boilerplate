@@ -1,8 +1,13 @@
 import * as React from 'react';
 
-export const NotFound = (routeData: any) => {
-  routeData.staticContext.status = 404;
+export const NotFound = ({ staticContext }) => {
+  if (staticContext) { // undefined in browser
+    staticContext.status = 404
+  }
+
   return (
-    <h1>Not Found</h1>
+    <div>
+      <strong>Not Found</strong>
+    </div>
   );
 }

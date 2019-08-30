@@ -1,5 +1,4 @@
 import 'tslib';
-import 'isomorphic-unfetch';
 
 import { createServer } from './server';
 

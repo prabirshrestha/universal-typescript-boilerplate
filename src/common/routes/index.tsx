@@ -1,7 +1,6 @@
 import * as React from 'react';
+import loadable from '@loadable/component';
 import { NotFound } from './notFound';
-import { Home } from './home';
-import { About } from './about';
 
 export interface IRoute {
   key?: string;
@@ -15,13 +14,13 @@ export const routes: IRoute[] = [
   {
     path: '/',
     exact: true,
-    component: Home,
+    component: loadable(() => import('./home')),
     fetchInitialData: () => Promise.resolve(null)
   },
   {
     path: '/about',
     exact: true,
-    component: About,
+    component: loadable(() => import('./about')),
     fetchInitialData: () => Promise.resolve(null)
   },
   {
