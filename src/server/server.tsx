@@ -10,6 +10,10 @@ import * as fastifyCompress from 'fastify-compress';
 import * as hyperid from 'hyperid';
 import { routes, IRoute } from '../common/routes';
 
+const production = process.env.NODE_ENV === 'production';
+const development = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const serviceWorkerEnabled = production;
+
 export function genReqId() {
   const instance = hyperid();
   return () => instance();
@@ -46,6 +50,12 @@ export function createServer() {
   server.get('/healthcheck', (req, reply) => {
     reply.send({});
   });
+
+  const serverWorkerRegistrationScript = `
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+`;
 
   server.get('*', async (req, reply) => {
     const url = req.raw.url;
@@ -90,9 +100,7 @@ export function createServer() {
         <div id="root">${html}</div>
         ${webExtractor.getScriptTags()}
         <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
+        ${serviceWorkerEnabled ? serverWorkerRegistrationScript : ''}
         </script>
     </body>
 </html>`);

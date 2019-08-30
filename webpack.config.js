@@ -53,6 +53,12 @@ const getConfig = target => {
       },
       plugins: [
         new LoadablePlugin(),
+        ...(target === 'server'
+          ? [new CopyWebpackPlugin([
+                { from: './src/public', to: '../public' }
+            ])]
+          : []
+        ),
         ...(target === 'web'
           ? [
             new WorkboxWebpackPlugin.InjectManifest({ // needs to be the last plugin since manfiest are based of hash
