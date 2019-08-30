@@ -8,6 +8,7 @@ import * as path from 'path';
 import * as fastify from 'fastify';
 import * as fastifyStatic from 'fastify-static';
 import * as fastifyCompress from 'fastify-compress';
+import * as fastifyEtag from 'fastify-etag';
 import * as hyperid from 'hyperid';
 import { routes, IRoute } from '../common/routes';
 
@@ -34,6 +35,8 @@ export function createServer() {
   const webStats = path.resolve('./dist/web/loadable-stats.json');
 
   server.register(fastifyCompress, {});
+
+  server.register(fastifyEtag);
 
   server.register(fastifyStatic, {
     root: path.resolve('./dist/public'),

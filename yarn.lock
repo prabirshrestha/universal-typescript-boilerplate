@@ -1297,7 +1297,7 @@ autoprefixer@^9.5.1:
     postcss "^7.0.17"
     postcss-value-parser "^4.0.0"
 
-avvio@^6.1.1:
+avvio@^6.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/avvio/-/avvio-6.2.2.tgz#af6ded59bde361fded817a6841a748142c659873"
   integrity sha512-7+yznbJOMoHQ8Z8VH+1meyRjtxUW8za6gqnHBl8DqlX5qPtaclNIgWrKrTLuIbfn2+1/EGkcr+rQXI8DYVU4RA==
@@ -2944,7 +2944,7 @@ fast-json-stable-stringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
   integrity sha1-1RQsDK7msRifh9OnYREGT4bIu/I=
 
-fast-json-stringify@^1.15.0:
+fast-json-stringify@^1.15.4:
   version "1.15.4"
   resolved "https://registry.yarnpkg.com/fast-json-stringify/-/fast-json-stringify-1.15.4.tgz#4fed7c739bcef5c8cda423c04b463c421c89709d"
   integrity sha512-lsGTxL0OIGjGSUXgWUOdSgjCL/xMyMvMudfGN3D1zOLEv44fYZ1ZXmMyCON5XdpaiZN6nCXmU7GQg7fbXfPG4g==
@@ -2982,6 +2982,13 @@ fastify-compress@0.11.0:
     string-to-stream "^2.0.0"
     unzipper "^0.10.1"
 
+fastify-etag@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/fastify-etag/-/fastify-etag-0.1.0.tgz#5949c6152ef778b167cf28694557e395f273c57a"
+  integrity sha512-bKHkuu1QrlOBnfBctdvW+7jHvuAFxNIkVSbtOrJu5FHicEtIadotFWVi1PNdROVpEFd/dbjYNNYxsEXMUTKalA==
+  dependencies:
+    fastify-plugin "^1.6.0"
+
 fastify-plugin@^1.0.0, fastify-plugin@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-1.6.0.tgz#c8198b08608f20c502b5dad26b36e9ae27206d7c"
@@ -2999,20 +3006,20 @@ fastify-static@2.5.0:
     readable-stream "^3.4.0"
     send "^0.16.0"
 
-fastify@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-2.7.1.tgz#09ec9dfaa67b453f90537501a1e148b0d98486ac"
-  integrity sha512-ScKPXD84lkdCgz7q0zjyBr1aLxKbXRt9HYL3XIt/L8ZD2f3fAcsLEyQ2/rHxLUzLGjPlEjIvprWUL3RZvlLRLw==
+fastify@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-2.8.0.tgz#3c5945d4ee62c058ebeca40952199cae34c738fd"
+  integrity sha512-+HXe9xZzbj79680hlehEs0B1Z3e5RQT6CtPthseqgRJy2i7Wlro8EEdM7u7ewwL9XREjLWssCPlJiZ3G+t4qsw==
   dependencies:
     abstract-logging "^1.0.0"
     ajv "^6.10.2"
-    avvio "^6.1.1"
-    fast-json-stringify "^1.15.0"
+    avvio "^6.2.2"
+    fast-json-stringify "^1.15.4"
     find-my-way "^2.0.0"
     flatstr "^1.0.12"
     light-my-request "^3.4.1"
     middie "^4.0.1"
-    pino "^5.13.1"
+    pino "^5.13.2"
     proxy-addr "^2.0.4"
     readable-stream "^3.1.1"
     rfdc "^1.1.2"
@@ -5643,7 +5650,7 @@ pino-std-serializers@^2.3.0:
   resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-2.4.2.tgz#cb5e3e58c358b26f88969d7e619ae54bdfcc1ae1"
   integrity sha512-WaL504dO8eGs+vrK+j4BuQQq6GLKeCCcHaMB2ItygzVURcL1CycwNEUHTD/lHFHs/NL5qAz2UKrjYWXKSf4aMQ==
 
-pino@^5.13.1:
+pino@^5.13.2:
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/pino/-/pino-5.13.2.tgz#773416c9764634276e7b2ae021357679ff7b5634"
   integrity sha512-WwOSCy36/gWhinsqWqAnuwIi2WtcH+jvoyeLm3bjUALIrzWIst0AovQjK4jVvSN2l64KFPfi3gd2fjsTovjdLQ==
