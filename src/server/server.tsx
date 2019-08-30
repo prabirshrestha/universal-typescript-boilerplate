@@ -77,6 +77,7 @@ export function createServer() {
         .code(context.status === 404 ? 404 : 200)
         .header('content-type', 'text/html; charset=utf-8')
         .send(`
+<!doctype html>
 <html>
     <head>
         <link rel="icon" href="/favicon.ico"/>
@@ -86,6 +87,11 @@ export function createServer() {
     <body>
         <div id="root">${html}</div>
         ${webExtractor.getScriptTags()}
+        <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+        </script>
     </body>
 </html>`);
     }
