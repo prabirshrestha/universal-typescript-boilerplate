@@ -70,7 +70,9 @@ export function createServer() {
     const html = renderToString(jsx);
 
     if (context.url) {
-      reply.redirect(context.url);
+      reply
+        .code(context.status || 302)
+        .redirect(context.url);
     } else {
       const jsxHtml = renderToString(jsx);
       reply
