@@ -5,7 +5,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
@@ -38,7 +38,19 @@ const getConfig = target => {
             enforce: 'pre',
             test: /\.js$/,
             loader: 'source-map-loader'
-          }
+          },
+          {
+            test: /\.css$/,
+            use: [
+              {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  hmr: development
+                },
+              },
+              'css-loader'
+            ],
+          },
         ]
       },
       optimization: {
@@ -64,6 +76,7 @@ const getConfig = target => {
       },
       plugins: [
         new LoadablePlugin(),
+        new MiniCssExtractPlugin(),
         ...(target === 'server'
           ? [new CopyWebpackPlugin([
                 { from: './src/public', to: '../public' }
