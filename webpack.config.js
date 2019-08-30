@@ -41,6 +41,17 @@ const getConfig = target => {
           }
         ]
       },
+      optimization: {
+        splitChunks: {
+          cacheGroups: {
+            react: {
+              chunks: 'all',
+              name: 'vendor',
+              test: /[\\]node_modules[\\/]/,
+            }
+          }
+        }
+      },
       resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
       },
