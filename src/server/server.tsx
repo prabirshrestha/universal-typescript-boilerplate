@@ -2,6 +2,7 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { ChunkExtractor, ChunkExtractorManager  } from '@loadable/server';
+import { Helmet } from 'react-helmet';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as fastify from 'fastify';
@@ -78,6 +79,7 @@ if ('serviceWorker' in navigator) {
     );
 
     const html = renderToString(jsx);
+    const helmet = Helmet.renderStatic();
 
     if (context.url) {
       reply
@@ -90,13 +92,15 @@ if ('serviceWorker' in navigator) {
         .header('content-type', 'text/html; charset=utf-8')
         .send(`
 <!doctype html>
-<html>
+<html ${helmet.htmlAttributes.toString()}>
     <head>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
         <link rel="icon" href="/favicon.ico"/>
         ${webExtractor.getLinkTags()}
         ${webExtractor.getStyleTags()}
     </head>
-    <body>
+    <body ${helmet.bodyAttributes.toString()}>
         <div id="root">${html}</div>
         ${webExtractor.getScriptTags()}
         <script>

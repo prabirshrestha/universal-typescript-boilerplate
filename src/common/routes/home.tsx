@@ -1,9 +1,15 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 
 export default class Home extends React.Component {
   render() {
     return (
-      <div>Home</div>
+      <>
+        <Helmet>
+          <title>Home</title>
+        </Helmet>
+        <div>Home</div>
+      </>
     );
   }
 }
