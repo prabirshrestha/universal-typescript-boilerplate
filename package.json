@@ -62,6 +62,7 @@
     "typescript": "3.5.3",
     "wait-on": "3.3.0",
     "webpack": "4.39.2",
+    "webpack-bundle-analyzer": "3.4.1",
     "webpack-cli": "3.3.7",
     "webpack-dev-server": "3.8.0",
     "webpack-manifest-plugin": "2.0.4",

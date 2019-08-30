@@ -4,6 +4,7 @@ const webpackMerge = require('webpack-merge');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
@@ -11,6 +12,7 @@ const path = require('path');
 const DIST_PATH = path.resolve(__dirname, 'dist');
 const production = process.env.NODE_ENV === 'production';
 const development = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const analyzeBundle = 0;
 
 const getConfig = target => {
     return {
@@ -58,7 +60,8 @@ const getConfig = target => {
               swDest: '../public/sw.js'
             })
           ]
-          : [])
+          : []),
+        ...(analyzeBundle && target === 'web' ? [ new BundleAnalyzerPlugin() ] : [])
       ],
     };
 };
