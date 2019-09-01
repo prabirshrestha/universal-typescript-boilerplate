@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeExternals = require('webpack-node-externals');
@@ -85,9 +85,21 @@ const getConfig = target => {
         ),
         ...(target === 'web'
           ? [
-            new WorkboxWebpackPlugin.InjectManifest({ // needs to be the last plugin since manfiest are based of hash
-              swSrc: './src/common/sw.js',
-              swDest: '../public/sw.js'
+            new OfflinePlugin({
+              excludes: [
+                '**/*.map',
+                'loadable-stats.json'
+              ],
+              externals: [
+                '/favicon.ico'
+              ],
+              autoUpdate: 1000 * 60 * 2,
+              ServiceWorker: {
+                output: '../public/sw.js',
+                publicPath: '/sw.js',
+                events: true,
+                minify: true
+              }
             })
           ]
           : []),
