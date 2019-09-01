@@ -11,6 +11,7 @@ export class App extends React.Component {
         <AppShell>
           <Helmet>
             <title>Universal Typescript Boilerplate</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
           </Helmet>
           <Switch>
             {routes.map(route => (
