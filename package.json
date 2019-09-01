@@ -33,6 +33,7 @@
     "fastify-etag": "0.1.0",
     "fastify-static": "2.5.0",
     "hyperid": "2.0.2",
+    "office-ui-fabric-react": "^7.28.3",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-helmet": "5.2.1",

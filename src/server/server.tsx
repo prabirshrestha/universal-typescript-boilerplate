@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
+import { renderStatic } from '@uifabric/merge-styles/lib-commonjs/server';
+import { initializeIcons } from '@uifabric/icons';
+import { configureLoadStyles } from '@microsoft/load-themed-styles';
 import { ChunkExtractor, ChunkExtractorManager  } from '@loadable/server';
 import { Helmet } from 'react-helmet';
 import * as fs from 'fs';
@@ -28,6 +31,16 @@ export function createServer(): Promise<fastify.FastifyInstance>{
     return503OnClosing: true,
     trustProxy: false,
     // genReqId: genReqId()
+  });
+
+  initializeIcons();
+
+  // Store registered styles in a variable used later for injection.
+  let _allStyles = '';
+
+  // Push styles into variables for injecting later.
+  configureLoadStyles(styles => {
+    _allStyles += styles;
   });
 
   const nodeStats = path.resolve('./dist/node/loadable-stats.json');
@@ -74,7 +87,8 @@ export function createServer(): Promise<fastify.FastifyInstance>{
       </StaticRouter>
     );
 
-    const html = renderToString(jsx);
+    const { html, css } = renderStatic(() => renderToString(jsx));
+    // const html = renderToString(jsx);
     const helmet = Helmet.renderStatic();
 
     if (context.url) {
@@ -95,11 +109,11 @@ export function createServer(): Promise<fastify.FastifyInstance>{
         <link rel="icon" href="/favicon.ico"/>
         ${webExtractor.getLinkTags()}
         ${webExtractor.getStyleTags()}
+        <style>${css}</style>
     </head>
     <body ${helmet.bodyAttributes.toString()}>
         <div id="root">${html}</div>
         ${webExtractor.getScriptTags()}
-
 </html>`);
     }
   });
