@@ -15,7 +15,7 @@ loadableReady(() => {
     </Router>,
     root);
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'production') {
     OfflinePluginRuntime.install({
       onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
       onUpdated: () => window['swUpdateAvailable'] = true // TODO: on router change if set to true perform force refresh
