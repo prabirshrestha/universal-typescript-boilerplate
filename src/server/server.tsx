@@ -21,7 +21,7 @@ export function genReqId() {
   return () => instance();
 }
 
-export function createServer() {
+export function createServer(): Promise<fastify.FastifyInstance>{
   const server = fastify({
     caseSensitive: false,
     ignoreTrailingSlash: true,
@@ -114,5 +114,5 @@ if ('serviceWorker' in navigator) {
     }
   });
 
-  return server;
+  return Promise.resolve(server);
 }
