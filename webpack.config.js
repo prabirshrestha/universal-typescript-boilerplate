@@ -20,8 +20,14 @@ const getConfig = target => {
       mode: development ? 'development' : 'production',
       target: target === 'server' ? 'node' : target,
       entry: target === 'server' ? './src/server/index' : `./src/client/main-${target}`,
+      devtool: development ? 'eval-cheap-module-source-map' : 'source-map',
       module: {
         rules: [
+          {
+            enforce: 'pre',
+            test: /\.js$/,
+            loader: 'source-map-loader'
+          },
           {
             test: /\.jsx?$/,
             use: [
@@ -44,11 +50,6 @@ const getConfig = target => {
               },
               'ts-loader'
             ]
-          },
-          {
-            enforce: 'pre',
-            test: /\.js$/,
-            loader: 'source-map-loader'
           },
           {
             test: /\.css$/,
