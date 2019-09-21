@@ -4,7 +4,6 @@ import { hydrate } from 'react-dom';
 import { loadableReady } from '@loadable/component';
 import { App } from '../common/app';
 
-import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 loadableReady(() => {
   const root = document.getElementById('root');
@@ -16,6 +15,7 @@ loadableReady(() => {
     root);
 
   if (process.env.NODE_ENV === 'production') {
+    const OfflinePluginRuntime = require('offline-plugin/runtime');
     OfflinePluginRuntime.install({
       onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
       onUpdated: () => window['swUpdateAvailable'] = true // TODO: on router change if set to true perform force refresh

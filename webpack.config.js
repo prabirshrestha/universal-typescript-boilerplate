@@ -23,6 +23,17 @@ const getConfig = target => {
       module: {
         rules: [
           {
+            test: /\.jsx?$/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  caller: { target }
+                }
+              }
+            ]
+          },
+          {
             test: /\.tsx?$/,
             use: [
               {
@@ -54,15 +65,15 @@ const getConfig = target => {
         ]
       },
       optimization: {
-        splitChunks: {
+        splitChunks: target === 'web' ? {
           cacheGroups: {
-            react: {
+            vendors: {
               chunks: 'all',
-              name: 'vendor',
-              test: /[\\]node_modules[\\/]/,
+              name: 'vendors',
+              test: /node_modules/
             }
           }
-        }
+        } : undefined
       },
       resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
@@ -70,7 +81,7 @@ const getConfig = target => {
       externals: target === 'web' ? undefined : ['@loadable/component', nodeExternals()],
       output: {
         path: path.join(DIST_PATH, target),
-        filename: production ? '[name]-bundle-[chunkhash:8].js' : '[name].js',
+        filename: production && target !== 'server' ? '[name]-bundle-[chunkhash:8].js' : '[name].js',
         publicPath: `/assets/`,
         libraryTarget: target === 'web' ? undefined : 'commonjs2'
       },
