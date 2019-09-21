@@ -83,7 +83,7 @@ const getConfig = target => {
             ])]
           : []
         ),
-        ...(target === 'web'
+        ...(target === 'web' && production
           ? [
             new OfflinePlugin({
               excludes: [
