@@ -4,7 +4,6 @@ import { hydrate } from 'react-dom';
 import { loadableReady } from '@loadable/component';
 import { App } from '../common/app';
 
-
 loadableReady(() => {
   const root = document.getElementById('root');
 

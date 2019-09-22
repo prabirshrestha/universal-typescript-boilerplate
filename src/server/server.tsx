@@ -82,24 +82,22 @@ export function createServer(): Promise<fastify.FastifyInstance>{
         .code(context.status || 302)
         .redirect(context.url);
     } else {
-      const jsxHtml = renderToString(jsx);
       reply
         .code(context.status || 200)
         .header('content-type', 'text/html; charset=utf-8')
-        .send(`
-<!doctype html>
+        .send(`<!doctype html>
 <html ${helmet.htmlAttributes.toString()}>
-    <head>
-        ${helmet.title.toString()}
-        ${helmet.meta.toString()}
-        <link rel="icon" href="/favicon.ico"/>
-        ${webExtractor.getLinkTags()}
-        ${webExtractor.getStyleTags()}
-    </head>
-    <body ${helmet.bodyAttributes.toString()}>
-        <div id="root">${html}</div>
-        ${webExtractor.getScriptTags()}
-
+  <head>
+    ${helmet.title.toString()}
+    ${helmet.meta.toString()}
+    <link rel="icon" href="/favicon.ico"/>
+    ${webExtractor.getLinkTags()}
+    ${webExtractor.getStyleTags()}
+  </head>
+  <body ${helmet.bodyAttributes.toString()}>
+    <div id="root">${html}</div>
+    ${webExtractor.getScriptTags()}
+  </body>
 </html>`);
     }
   });
