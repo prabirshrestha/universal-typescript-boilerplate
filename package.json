@@ -29,7 +29,7 @@
     "@types/react-router-dom": "4.3.5",
     "core-js": "3.2.1",
     "fastify": "2.8.0",
-    "fastify-compress": "0.11.0",
+    "fastify-compress": "1.0.0",
     "fastify-etag": "0.1.0",
     "fastify-static": "2.5.0",
     "hyperid": "2.0.2",
