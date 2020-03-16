@@ -58,7 +58,7 @@
     "raw-loader": "4.0.0",
     "rimraf": "3.0.2",
     "source-map-loader": "0.2.4",
-    "stylelint": "13.1.0",
+    "stylelint": "13.2.0",
     "surge": "0.21.3",
     "ts-loader": "6.2.1",
     "tslint": "6.0.0",
