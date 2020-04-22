@@ -3107,10 +3107,10 @@ fastify-compress@2.0.1:
     string-to-stream "^3.0.0"
     unzipper "^0.10.8"
 
-fastify-etag@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/fastify-etag/-/fastify-etag-0.1.0.tgz#5949c6152ef778b167cf28694557e395f273c57a"
-  integrity sha512-bKHkuu1QrlOBnfBctdvW+7jHvuAFxNIkVSbtOrJu5FHicEtIadotFWVi1PNdROVpEFd/dbjYNNYxsEXMUTKalA==
+fastify-etag@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/fastify-etag/-/fastify-etag-0.2.0.tgz#5947b8a7bb0f3979c5b1df2026a0c845366e8649"
+  integrity sha512-B/0zFpiyxPWQsk7ICC6FVrqQeiZQu+6o3ZLEKn/eVUJXfGfvEKs5AWPnETLaR5AwRBbTzsccZkvwbGVbNg4kuA==
   dependencies:
     fastify-plugin "^1.6.0"
 
