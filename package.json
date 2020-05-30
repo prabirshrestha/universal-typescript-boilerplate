@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.8.4",
+    "@babel/core": "7.10.2",
     "@babel/runtime": "7.8.4",
     "@loadable/component": "5.12.0",
     "@loadable/server": "5.12.0",
