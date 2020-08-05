@@ -28,7 +28,7 @@
     "@types/react-dom": "16.9.5",
     "@types/react-router-dom": "5.1.3",
     "core-js": "3.6.4",
-    "fastify": "2.12.0",
+    "fastify": "2.15.1",
     "fastify-compress": "2.0.1",
     "fastify-etag": "0.1.0",
     "fastify-static": "2.6.0",
